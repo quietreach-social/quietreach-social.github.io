@@ -1,6 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="refresh" content="0; url=https://ipfs.io/ipfs/QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L" />
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    const links = [
+      "https://ipfs.io/ipfs/QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L"
+    ];
+
+    (async () => {
+      for (let url of links) {
+        try {
+          const res = await fetch(url, { method: "HEAD" });
+          if (res.ok) {
+            window.location.href = url;
+            return;
+          }
+        } catch (e) {
+          // try next one
+        }
+      }
+      document.body.innerText = "All fallback links failed. Please try again later.";
+    })();
+  </script>
 </head>
+<body>
+  <noscript>JavaScript is required to view this page.</noscript>
+</body>
 </html>
