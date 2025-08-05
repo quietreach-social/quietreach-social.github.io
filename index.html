@@ -16,9 +16,9 @@
   <iframe id="ipfs-frame"></iframe>
 
   <script>
-    const hash = "QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L";
     const gateways = [
-      `https://cloudflare-ipfs.com/ipfs/${hash}`
+      "https://ipfs.io/ipfs/QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L"
+      // Future: add other URLs with different hashes if needed
     ];
 
     const iframe = document.getElementById("ipfs-frame");
@@ -26,7 +26,6 @@
     (async () => {
       for (let url of gateways) {
         try {
-          // Try fetch as a lightweight test (browsers may block this if CORS is strict)
           await fetch(url, { method: "HEAD", mode: "no-cors" });
           iframe.src = url;
           return;
@@ -34,7 +33,13 @@
           console.warn("Failed to load:", url);
         }
       }
-      document.body.innerHTML = "<h1>Failed to load IPFS content.</h1>";
+
+      // Fallback display
+      document.body.innerHTML = `
+        <div style="text-align:center; padding-top:20%;">
+          <h2>Content unavailable</h2>
+          <p>Please try again later.</p>
+        </div>`;
     })();
   </script>
 </body>
