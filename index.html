@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Redirecting...</title>
+  <title>QuietReach Embed</title>
   <style>
     html, body, iframe {
       margin: 0;
       padding: 0;
-      width: 100%;
       height: 100%;
+      width: 100%;
       border: none;
     }
   </style>
 </head>
 <body>
-  <iframe id="ipfs-frame" src="" frameborder="0"></iframe>
+  <iframe id="ipfs-frame"></iframe>
 
   <script>
+    const hash = "QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L";
     const gateways = [
-      "https://cloudflare-ipfs.com/ipfs/QmeMPPTCJPVLPCQTGvvqprYfmtEmksqsU8QxdR785si66L"
+      `https://cloudflare-ipfs.com/ipfs/${hash}`
     ];
 
-    async function tryGateways() {
+    const iframe = document.getElementById("ipfs-frame");
+
+    (async () => {
       for (let url of gateways) {
         try {
-          const response = await fetch(url, { method: "HEAD", mode: "no-cors" });
-          document.getElementById("ipfs-frame").src = url;
+          // Try fetch as a lightweight test (browsers may block this if CORS is strict)
+          await fetch(url, { method: "HEAD", mode: "no-cors" });
+          iframe.src = url;
           return;
-        } catch (e) {
+        } catch (err) {
           console.warn("Failed to load:", url);
         }
       }
-
-      document.body.innerHTML = "<h1>All gateways failed. Please try again later.</h1>";
-    }
-
-    tryGateways();
+      document.body.innerHTML = "<h1>Failed to load IPFS content.</h1>";
+    })();
   </script>
 </body>
 </html>
